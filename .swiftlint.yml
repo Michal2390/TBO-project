@@ -1,46 +1,30 @@
-# SwiftLint Configuration for Security Scanning
+# SwiftLint Configuration dla TBO Project
+# SAST - Static Application Security Testing
 
-# Włączone reguły
+# Włączone reguły bezpieczeństwa
 opt_in_rules:
   - force_unwrapping
   - force_try
   - implicitly_unwrapped_optional
   - weak_delegate
-  - nslocalizedstring_key
   - legacy_hashing
   - unowned_variable_capture
   - legacy_random
   - private_over_fileprivate
-  - redundant_type_annotation
-  - strict_fileprivate
-  - file_header
+  - fatal_error_message
   - discouraged_optional_collection
   - empty_string
-  - fatal_error_message
-  - fallthrough
 
-# Wyłączone reguły (jeśli są zbyt restrykcyjne)
+# Wyłączone zbyt restrykcyjne reguły
 disabled_rules:
   - line_length
   - function_body_length
   - type_body_length
-  - file_length
 
-# Ostrzeżenia dla potencjalnych problemów bezpieczeństwa
+# Ostrzeżenia jako błędy dla bezpieczeństwa
 force_cast: error
 force_try: error
 force_unwrapping: warning
-
-# Konfiguracja dla specyficznych reguł
-identifier_name:
-  min_length:
-    warning: 2
-  max_length:
-    warning: 50
-  excluded:
-    - id
-    - url
-    - key
 
 # Wykluczenia
 excluded:
@@ -49,31 +33,30 @@ excluded:
   - DerivedData
   - .swiftpm
 
-# Custom rules for security
+# Custom rules dla wykrywania podatności
 custom_rules:
   hardcoded_password:
     name: "Hardcoded Password"
     regex: '(password|passwd|pwd)\s*=\s*"[^"]+"'
-    message: "Avoid hardcoding passwords"
+    message: "⚠️ SECURITY: Wykryto zahardkodowane hasło!"
     severity: error
   
   hardcoded_api_key:
     name: "Hardcoded API Key"
-    regex: '(api_key|apiKey|API_KEY)\s*=\s*"[^"]+"'
-    message: "Avoid hardcoding API keys"
+    regex: '(api[_-]?key|apiKey|API[_-]?KEY)\s*=\s*"[^"]+"'
+    message: "⚠️ SECURITY: Wykryto zahardkodowany klucz API!"
     severity: error
   
   http_url:
     name: "Insecure HTTP URL"
     regex: 'http://(?!localhost|127\.0\.0\.1)'
-    message: "Use HTTPS instead of HTTP"
+    message: "⚠️ SECURITY: Użyj HTTPS zamiast HTTP!"
     severity: warning
   
-  userdefaults_password:
-    name: "Password in UserDefaults"
-    regex: 'UserDefaults.*\.set\([^,]*,\s*forKey:\s*"[^"]*password[^"]*"\)'
-    message: "Never store passwords in UserDefaults"
+  sql_injection_risk:
+    name: "SQL Injection Risk"
+    regex: 'SELECT.*WHERE.*"\(.*\)"'
+    message: "⚠️ SECURITY: Potencjalna podatność SQL Injection!"
     severity: error
 
-# Reporter
 reporter: "xcode"

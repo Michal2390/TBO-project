@@ -1,8 +1,8 @@
 //
 //  TBO_Lab4App.swift
-//  TBO-Lab4
+//  TBO-Lab4 - Projekt TBO CICD Security Pipeline
 //
-//  Created by Michal Fereniec on 30/01/2026.
+//  Aplikacja demonstracyjna dla projektu TBO
 //
 
 import SwiftUI
