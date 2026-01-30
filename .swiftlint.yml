@@ -1,0 +1,79 @@
+# SwiftLint Configuration for Security Scanning
+
+# Włączone reguły
+opt_in_rules:
+  - force_unwrapping
+  - force_try
+  - implicitly_unwrapped_optional
+  - weak_delegate
+  - nslocalizedstring_key
+  - legacy_hashing
+  - unowned_variable_capture
+  - legacy_random
+  - private_over_fileprivate
+  - redundant_type_annotation
+  - strict_fileprivate
+  - file_header
+  - discouraged_optional_collection
+  - empty_string
+  - fatal_error_message
+  - fallthrough
+
+# Wyłączone reguły (jeśli są zbyt restrykcyjne)
+disabled_rules:
+  - line_length
+  - function_body_length
+  - type_body_length
+  - file_length
+
+# Ostrzeżenia dla potencjalnych problemów bezpieczeństwa
+force_cast: error
+force_try: error
+force_unwrapping: warning
+
+# Konfiguracja dla specyficznych reguł
+identifier_name:
+  min_length:
+    warning: 2
+  max_length:
+    warning: 50
+  excluded:
+    - id
+    - url
+    - key
+
+# Wykluczenia
+excluded:
+  - Pods
+  - .build
+  - DerivedData
+  - .swiftpm
+
+# Custom rules for security
+custom_rules:
+  hardcoded_password:
+    name: "Hardcoded Password"
+    regex: '(password|passwd|pwd)\s*=\s*"[^"]+"'
+    message: "Avoid hardcoding passwords"
+    severity: error
+  
+  hardcoded_api_key:
+    name: "Hardcoded API Key"
+    regex: '(api_key|apiKey|API_KEY)\s*=\s*"[^"]+"'
+    message: "Avoid hardcoding API keys"
+    severity: error
+  
+  http_url:
+    name: "Insecure HTTP URL"
+    regex: 'http://(?!localhost|127\.0\.0\.1)'
+    message: "Use HTTPS instead of HTTP"
+    severity: warning
+  
+  userdefaults_password:
+    name: "Password in UserDefaults"
+    regex: 'UserDefaults.*\.set\([^,]*,\s*forKey:\s*"[^"]*password[^"]*"\)'
+    message: "Never store passwords in UserDefaults"
+    severity: error
+
+# Reporter
+reporter: "xcode"
