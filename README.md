@@ -8,9 +8,7 @@
 ## 👥 Informacje o Zespole
 
 **Projekt wykonali:**
-- Michał Fereniec (wpisz tu swój numer indeksu)
-- [Członek 2 - jeśli jest]
-- [Członek 3 - jeśli jest]
+- Michał Fereniec 307340
 
 **Termin oddania:** 29.01.2025  
 **Przedmiot:** TBO (Testowanie Bezpieczeństwa Oprogramowania)  
